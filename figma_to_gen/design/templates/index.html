@@ -1,0 +1,25 @@
+<!-- design/templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma to Angular</title>
+</head>
+<body>
+    <h1>Generate Angular Code from Figma Design</h1>
+    <form method="POST" action="{% url 'generate_angular_code' %}">
+        {% csrf_token %}
+        <label for="figma_file_id">Figma File ID:</label>
+        <input type="text" name="figma_file_id" required><br><br>
+
+        <label for="figma_access_token">Figma Access Token:</label>
+        <input type="text" name="figma_access_token" required><br><br>
+
+        <label for="gemini_api_key">Gemini API Key:</label>
+        <input type="text" name="gemini_api_key" required><br><br>
+
+        <button type="submit">Generate Code</button>
+    </form>
+</body>
+</html>
