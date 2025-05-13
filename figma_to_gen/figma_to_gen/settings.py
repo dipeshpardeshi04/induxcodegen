@@ -11,7 +11,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config, Csv
 
+# Initialize config
+# config = Config('')
+
+FIGMA_ACCESS_TOKEN = config('FIGMA_ACCESS_TOKEN')
+GEMINI_API_KEY = config('GEMINI_API_KEY')
+FIGMA_FILE_ID = config('FIGMA_FILE_ID')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

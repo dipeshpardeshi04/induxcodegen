@@ -1,6 +1,6 @@
 import requests
 from django.conf import settings
-
+from decouple import config
 
 # Function to get the Figma file data
 def get_figma_file_data(figma_file_id, access_token):
@@ -19,7 +19,7 @@ def get_figma_file_data(figma_file_id, access_token):
 
 # Function to send the Figma data to Gemini API to generate Angular code
 def generate_angular_code(figma_data):
-    api_key = settings.GEMINI_API_KEY
+    api_key = config('GEMINI_API_KEY')
     url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}'
     headers = {
         'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ def generate_angular_code(figma_data):
 
     # Better prompt for separate Angular files
     prompt_text = (
-        "From the following Figma JSON data, generate Angular component code split into separate files:\n\n"
+        "From the following Figma JSON data, generate Angular component code split into separate files and plz not give explanation on give the actuall code:\n\n"
         "1. component.ts\n"
         "2. component.html\n"
         "3. component.css\n\n"

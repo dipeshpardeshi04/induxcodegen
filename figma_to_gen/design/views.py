@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.conf import settings
 from .utils import get_figma_file_data, generate_angular_code, save_angular_code_to_file
-
+from decouple import config
 
 
 def home(request):
@@ -10,8 +11,8 @@ def home(request):
 def get_design_code(request):
     # Static data for now (replace with real ones later)
     figma_file_id = "IIpRorWOueRQMMzAKoWfuY"
-    figma_access_token = "figd_Y07B0pVY2xXggAAW5b-KDqK9pb_PYKAM0FnZw5Lz"
-    gemini_api_key = "AIzaSyCcWYATNjW6B7vXTGxKP61ebAwwgjaKpLM"
+    figma_access_token = settings.FIGMA_ACCESS_TOKEN
+    gemini_api_key = settings.GEMINI_API_KEY
 
     try:
         # Step 1: Get Figma data
