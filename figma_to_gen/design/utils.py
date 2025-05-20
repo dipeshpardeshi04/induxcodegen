@@ -27,17 +27,22 @@ def generate_angular_code(figma_data):
 
     # Better prompt for separate Angular files
     prompt_text = (
-        "From the following Figma JSON data, generate Angular component code split into separate files and plz not give explanation on give the actuall code:\n\n"
-        "1. component.ts\n"
-        "2. component.html\n"
-        "3. component.css\n\n"
-        "Each file content should be clearly separated in your response like:\n"
-        "--- component.ts ---\n<code here>\n\n"
-        "--- component.html ---\n<code here>\n\n"
-        "--- component.css ---\n<code here>\n\n"
-        "Here is the Figma JSON:\n"
-        f"{figma_data}"
-    )
+    "From the following Figma JSON data, generate a complete Angular component in a single code block.\n"
+    "Include the HTML, CSS (inside the component or as styles), and TypeScript code.\n"
+    "Do NOT provide any explanation or markdown formatting.\n"
+    "The component should be named appropriately (e.g., HomeComponent), but feel free to name it based on the design context.\n"
+    "Replace any SVGs or icons with random image URLs (like Unsplash), keeping the layout intact.\n"
+    "Make the UI professional, clean, modern, and fully responsive.\n"
+    "Ensure all styling is present (in the component or inline styles) — no external CSS frameworks unless necessary.\n"
+    "Include simple interactivity like click events or hover animations where appropriate.\n"
+    "Make sure the code is well-structured, production-ready, and works directly inside an Angular project.and plz give always in same structure, do not change it \n\n"
+    "Here is the Figma JSON:\n"
+    
+
+
+    f"{figma_data}"
+)
+
 
     data = {
         "contents": [
@@ -59,6 +64,6 @@ def generate_angular_code(figma_data):
         raise Exception(f"Error from Gemini API: {response.text}")
 
 # Function to save the Angular code to a file
-def save_angular_code_to_file(code, filename):
-    with open(filename, 'w') as file:
-        file.write(code)
+# def save_angular_code_to_file(code, filename):
+#     with open(filename, 'w') as file:
+#         file.write(code)
