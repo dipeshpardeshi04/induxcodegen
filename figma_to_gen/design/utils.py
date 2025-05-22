@@ -1,6 +1,7 @@
 import requests
 from django.conf import settings
 from decouple import config
+import time
 
 # Function to get the Figma file data
 def get_figma_file_data(figma_file_id, access_token):
@@ -27,8 +28,9 @@ def generate_angular_code(figma_data):
 
     # Better prompt for separate Angular files
     prompt_text = (
-    "From the following Figma JSON data, generate a complete Angular component in a single code block.\n"
+    "From the following Figma JSON data, generate a complete Angular component with PrimeNG in a single code block.\n"
     "Include the HTML, CSS (inside the component or as styles), and TypeScript code.\n"
+    "And Plz always set Html in template: `` and css in styles: [``] \n"
     "Do NOT provide any explanation or markdown formatting.\n"
     "The component should be named appropriately (e.g., HomeComponent), but feel free to name it based on the design context.\n"
     "Replace any SVGs or icons with random image URLs (like Unsplash), keeping the layout intact.\n"
