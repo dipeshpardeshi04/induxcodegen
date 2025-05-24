@@ -7,7 +7,9 @@ import re
 import io
 import zipfile
 import time
-
+import json
+from django.http import JsonResponse, HttpResponseBadRequest
+from django.views.decorators.csrf import csrf_exempt
 
 def home(request):
     return HttpResponse("Welcome to the homepage! ->  http://127.0.0.1:8000/generate-angular-code/?file_id=YOUR_FILE_ID")
@@ -90,3 +92,42 @@ def clean_figma_data(figma_data):
 
 def clean_code(code):
     return code.replace("```typescript", "").replace("```", "").strip()
+
+
+
+def figma_json_to_code(request):
+    if request.method != 'POST':
+        return HttpResponseBadRequest('Only POST allowed')
+
+    try:
+        data = json.loads(request.body)
+        nodes = data.get('components', [])
+
+        html_output = ""
+        for node in nodes:
+            html_output += render_component(node)
+
+        return JsonResponse({
+            'status': 'success',
+            'generated_code': html_output
+        })
+
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+
+# Helper function to render a component into HTML
+def render_component(node):
+    component = node.get("component", "div")
+    styles = node.get("styles", {})
+    style_string = "; ".join([f"{k}: {v}" for k, v in styles.items()])
+    label = node.get("label", "")
+
+    if component.lower() == "button":
+        return f'<button style="{style_string}">{label}</button>\n'
+    elif component.lower() == "input":
+        return f'<input placeholder="{label}" style="{style_string}"/>\n'
+    elif component.lower() == "text":
+        return f'<p style="{style_string}">{label}</p>\n'
+    else:
+        return f'<div style="{style_string}">{label}</div>\n'
